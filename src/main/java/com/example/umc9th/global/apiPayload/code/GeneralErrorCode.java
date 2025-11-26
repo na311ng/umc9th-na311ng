@@ -11,6 +11,12 @@ public enum GeneralErrorCode implements BaseErrorCode{
     BAD_REQUEST(HttpStatus.BAD_REQUEST,
             "COMMON400_1",
             "잘못된 요청입니다."),
+    PAGE_NOT_FOUND(HttpStatus.BAD_REQUEST,
+            "PAGE400_1",
+            "page 파라미터가 존재하지 않습니다. "),
+    INVALID_PAGE(HttpStatus.BAD_REQUEST,
+            "PAGE400_2",
+            "page 값은 1 이상의 정수여야 합니다."),
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED,
             "AUTH401_1",
             "인증이 필요합니다."),
@@ -20,12 +26,13 @@ public enum GeneralErrorCode implements BaseErrorCode{
     NOT_FOUND(HttpStatus.NOT_FOUND,
             "COMMON404_1",
             "요청한 리소스를 찾을 수 없습니다."),
-    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR,
-            "COMMON500_1",
-            "예기치 않은 서버 에러가 발생했습니다."),
     DUPLICATE_RESOUCE(HttpStatus.CONFLICT,
             "COMMON409_1",
             "이미 존재하는 리소스입니다."),
+    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR,
+            "COMMON500_1",
+            "예기치 않은 서버 에러가 발생했습니다."),
+
     ;
 
     private final HttpStatus status;

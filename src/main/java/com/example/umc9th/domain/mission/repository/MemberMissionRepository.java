@@ -10,6 +10,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface MemberMissionRepository extends JpaRepository<MemberMission, Long> {
 
+    Page<MemberMission> findAllByMemberIdAndIsCompleteFalse(Long memberId, Pageable pageable);
+
     @Query("""
 select new com.example.umc9th.domain.mission.dto.res.MemberMissionResponse(
     mm.id,

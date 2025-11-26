@@ -13,12 +13,16 @@ public class GeneralExceptionAdvice {
 
     // 애플리케이션에서 발생하는 커스텀 예외를 처리
     @ExceptionHandler(GeneralException.class)
-    public ResponseEntity<ApiResponse<Void>> handleException(
+    public ResponseEntity<ApiResponse<Void>> handleGeneralException(
             GeneralException ex
     ) {
-        return ResponseEntity.status(ex.getCode().getStatus())
+
+        BaseErrorCode errorCode = ex.getCode();
+
+        return ResponseEntity.status(errorCode.getStatus())
                 .body(ApiResponse.onFailure(
-                        ex.getCode(),
+                        errorCode.getCode(),
+                        errorCode.getMessage(),
                         null
                 )
         );
@@ -26,13 +30,15 @@ public class GeneralExceptionAdvice {
 
     // 그 외의 정의되지 않은 모든 예외 처리
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiResponse<String>> handleException(
+    public ResponseEntity<ApiResponse<?>> handleException(
             Exception ex
     ){
         BaseErrorCode code = GeneralErrorCode.INTERNAL_SERVER_ERROR;
+
         return ResponseEntity.status(code.getStatus())
                 .body(ApiResponse.onFailure(
-                        code,
+                        code.getCode(),
+                        code.getMessage(),
                         ex.getMessage()
                 )
         );

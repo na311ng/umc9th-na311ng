@@ -33,7 +33,7 @@ public class ApiResponse<T> {
         return new ApiResponse<>(true, code.getCode(), code.getMessage(), null);
     }
     // 실패한 경우 (result 포함)
-    public static <T> ApiResponse<T> onFailure(BaseErrorCode code, T result) {
-        return new ApiResponse<>(false, code.getCode(), code.getMessage(), result);
+    public static <T> ApiResponse<T> onFailure(String code, String message, T result) {
+        return new ApiResponse<>(false, code, message, result);
     }
 }

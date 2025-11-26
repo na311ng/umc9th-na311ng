@@ -3,7 +3,9 @@ package com.example.umc9th.domain.mission.controller;
 import com.example.umc9th.domain.mission.dto.req.MemberMissionCreateReqDTO;
 import com.example.umc9th.domain.mission.dto.res.MemberMissionCreateResDTO;
 import com.example.umc9th.domain.mission.dto.res.MemberMissionResponse;
+import com.example.umc9th.domain.mission.dto.res.MyMissionListDTO;
 import com.example.umc9th.domain.mission.service.MemberMissionService;
+import com.example.umc9th.global.annotation.ValidPage;
 import com.example.umc9th.global.apiPayload.ApiResponse;
 import com.example.umc9th.global.apiPayload.code.GeneralSuccessCode;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +38,19 @@ public class MemberMissionController {
         return ApiResponse.onSuccess(
                 GeneralSuccessCode.CREATED,
                 memberMissionService.challengeMission(missionId, request)
+        );
+    }
+
+    // 내가 진행중인 미션 목록 API 구현
+    @GetMapping("/my-progress")
+    public ApiResponse<MyMissionListDTO> getMyProgressMissions(
+            @ValidPage @RequestParam(required = false) Integer page
+    ){
+        Long loginMemberId = 1L;
+
+        return ApiResponse.onSuccess(
+                GeneralSuccessCode.OK,
+                memberMissionService.getMyProgressMissions(loginMemberId, page)
         );
     }
 
