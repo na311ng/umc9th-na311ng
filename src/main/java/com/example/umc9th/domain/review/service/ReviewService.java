@@ -5,6 +5,7 @@ import com.example.umc9th.domain.member.repository.MemberRepository;
 import com.example.umc9th.domain.review.converter.ReviewConverter;
 import com.example.umc9th.domain.review.dto.req.ReviewCreateReqDTO;
 import com.example.umc9th.domain.review.dto.res.ReviewCreateResDTO;
+import com.example.umc9th.domain.review.dto.res.ReviewListDTO;
 import com.example.umc9th.domain.review.entitiy.QReview;
 import com.example.umc9th.domain.review.entitiy.Review;
 import com.example.umc9th.domain.review.repository.ReviewRepository;
@@ -16,6 +17,7 @@ import com.example.umc9th.global.apiPayload.code.GeneralErrorCode;
 import com.example.umc9th.global.apiPayload.exception.GeneralException;
 import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -81,5 +83,14 @@ public class ReviewService {
         }
 
         return reviewRepository.searchReviews(builder);
+    }
+
+    public ReviewListDTO getMyReviews(Long memberId, int page) {
+
+        var pageable = PageRequest.of(page - 1, 10);
+
+        var reviewPage = reviewRepository.findAllByMemberId(memberId, pageable);
+
+        return ReviewConverter.toReviewListDTO(reviewPage);
     }
 }
