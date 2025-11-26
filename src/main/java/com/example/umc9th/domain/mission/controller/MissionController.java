@@ -3,6 +3,7 @@ package com.example.umc9th.domain.mission.controller;
 import com.example.umc9th.domain.mission.dto.req.MissionCreateReqDTO;
 import com.example.umc9th.domain.mission.dto.res.MissionCreateResDTO;
 import com.example.umc9th.domain.mission.dto.res.MissionHomeResponse;
+import com.example.umc9th.domain.mission.dto.res.StoreMissionListDTO;
 import com.example.umc9th.domain.mission.service.MissionService;
 import com.example.umc9th.global.apiPayload.ApiResponse;
 import com.example.umc9th.global.apiPayload.code.GeneralSuccessCode;
@@ -37,6 +38,18 @@ public class MissionController {
         return ApiResponse.onSuccess(
                 GeneralSuccessCode.CREATED,
                 missionService.createMission(storeId, dto)
+        );
+    }
+
+    // 가게별 미션 목록 조회
+    @GetMapping("/stores/{storeId}")
+    public ApiResponse<StoreMissionListDTO> getStoreMissions(
+            @PathVariable Long storeId,
+            @RequestParam(defaultValue = "1") int page
+    ){
+        return ApiResponse.onSuccess(
+                GeneralSuccessCode.OK,
+                missionService.getMissionByStore(storeId, page)
         );
     }
 }
