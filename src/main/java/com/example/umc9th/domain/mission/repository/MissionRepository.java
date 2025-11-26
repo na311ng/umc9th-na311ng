@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface MissionRepository extends JpaRepository<Mission, Long> {
+
+
     @Query("""
         select new com.example.umc9th.domain.mission.dto.res.MissionHomeResponse(
             m.id,
@@ -28,4 +30,7 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
             @Param("locationId") Long locationId,
             Pageable pageable
     );
+
+    // 특정 가게의 미션 목록 조회
+    Page<Mission> findAllByStoreId(Long storeId, Pageable pageable);
 }
